@@ -39,7 +39,7 @@ export default function PopularDishes() {
                         <Typography
                           level="h2"
                           fontSize="lg"
-                          text-color="#fff"
+                          textColor="#fff"
                           mb={1}
                         >
                           {ele.productName}
@@ -66,13 +66,14 @@ export default function PopularDishes() {
                         borderTop: "1px solid",
                         height: "60px",
                       }}
-                    ></CardOverflow>
-                    <Typography
-                      startDecorator={<DescriptionOutlinedIcon />}
-                      textColor={"neutral.300"}
                     >
-                      This is delicious meal
-                    </Typography>
+                      <Typography
+                        startDecorator={<DescriptionOutlinedIcon />}
+                        textColor={"neutral.300"}
+                      >
+                        This is delicious meal
+                      </Typography>
+                    </CardOverflow>
                   </Card>
                 </CssVarsProvider>
               );

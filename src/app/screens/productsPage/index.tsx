@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "@mui/material";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import { log } from "console";
-import ChosenProduct from "./ChosenProducts";
+import ChosenProduct from "./ChosenProduct";
 import Products from "./Products";
 import "../../../css/products.css";
 

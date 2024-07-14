@@ -15,7 +15,7 @@ import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { Rowing } from "@mui/icons-material";
+import { Margin, Rowing } from "@mui/icons-material";
 
 const products = [
   { productName: "Cutlet", imagePAth: "/img/cutlet.webp" },
@@ -65,7 +65,6 @@ export default function Products() {
                         color="primary"
                         size="small"
                         endIcon={<SearchIcon />}
-                        onClick={() => alert("Search button clicked!")}
                       >
                         Search
                       </Button>
@@ -102,9 +101,16 @@ export default function Products() {
           </Stack>
           <Stack
             className="list-category-section"
-            sx={{ display: "flex", flexDirection: "row", marginTop: "41px" }}
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              marginTop: "41px",
+              justifyContent: "flex-end",
+              width: "100%",
+              height: "auto",
+            }}
           >
-            <Stack className="product-category">
+            <Stack className="product-category" sx={{ marginRight: "10px" }}>
               <div className="category-main">
                 <Button variant="contained" color="primary">
                   Dish
@@ -155,7 +161,7 @@ export default function Products() {
                         <span className="product-title">
                           {product.productName}
                         </span>
-                        <div className="product-desc">
+                        <div className="product-price">
                           <MonetizationOnIcon />
                           {12}
                         </div>
@@ -168,10 +174,82 @@ export default function Products() {
               )}
             </Stack>
           </Stack>
+          <Stack className="pagination-section">
+            <Pagination
+              count={3}
+              page={1}
+              renderItem={(item) => (
+                <PaginationItem
+                  components={{
+                    previous: ArrowBackIcon,
+                    next: ArrowForwardIcon,
+                  }}
+                  {...item}
+                  color={"secondary"}
+                />
+              )}
+            />
+          </Stack>
         </Stack>
       </Container>
-      <div className="brands-logo"></div>
-      <div className="address"></div>
+
+      <div className="brands-logo">
+        <Container>
+          <Stack className="brand-title">
+            <Box className="brand-title-text">Our Family Brands</Box>
+          </Stack>
+          <Stack className="brand-logos">
+            <Box className="logo-box">
+              <img
+                src="img/gurme.webp"
+                style={{ width: "238px", height: "329px" }}
+              />
+            </Box>
+
+            <Box className="logo-box">
+              <img
+                src="img/seafood.webp"
+                style={{ width: "230px", height: "329px" }}
+              />
+            </Box>
+
+            <Box className="logo-box">
+              <img
+                src="img/sweets.webp"
+                style={{ width: "238px", height: "329px" }}
+              />
+            </Box>
+
+            <Box className="logo-box">
+              <img
+                src="img/doner.webp"
+                style={{ width: "238px", height: "329px" }}
+              />
+            </Box>
+          </Stack>
+        </Container>
+      </div>
+      <div className="address">
+        <Container>
+          <Stack
+            className="address-area"
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Box className="title">Our address</Box>
+            <iframe
+              style={{ marginTop: "60px" }}
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3234.279488067767!2d127.13298197622382!3d35.8421497725358!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357023379e824939%3A0xd35dd0a46a73b0f0!2s1549-18%20Geumam-dong%2C%20Deokjin-gu%2C%20Jeonju%2C%20Jeollabuk-do!5e0!3m2!1sen!2skr!4v1720974938245!5m2!1sen!2skr"
+              width="1300"
+              height="500"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </Stack>
+        </Container>
+      </div>
     </div>
   );
 }

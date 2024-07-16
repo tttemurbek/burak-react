@@ -44,16 +44,29 @@ export default function OrdersPage() {
         </Stack>
 
         <Stack className="order-right">
-          <Box className="order-info-box">
-            <Box className="member-box">
-              <div className="order-user-img">
-                <img
-                  src="/icons/default-ser.svg"
-                  className="order-user-avatar"
-                />
-              </div>
-            </Box>
+          <Box className="order-right-top">
+            <img src="/img/martin.webp" className="order-right-top-img" />
+            <div className="order-right-top-text">
+              <p className="order-right-top-name">Justin</p>
+              <p className="order-right-top-user">USER</p>
+            </div>
+            <div>
+              <hr
+                style={{
+                  width: "332px",
+                  height: "2px",
+                  textAlign: "left",
+                  marginLeft: "0px",
+                  marginTop: "20px",
+                }}
+              />
+            </div>
+            <div className="order-right-top-address">
+              <img src="/icons/location.svg" />
+              <p>South Korea, Busan</p>
+            </div>
           </Box>
+          <Box className="order-right-bottom"></Box>
         </Stack>
       </Container>
     </div>

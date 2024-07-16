@@ -66,7 +66,30 @@ export default function OrdersPage() {
               <p>South Korea, Busan</p>
             </div>
           </Box>
-          <Box className="order-right-bottom"></Box>
+          <Box className="order-right-bottom">
+            <input
+              className="card-number"
+              type="text"
+              placeholder="Card number : 5243 4090 2002 7495"
+            />
+            <div className="date-and-cvv">
+              <input
+                type="text"
+                name=""
+                id=""
+                placeholder="07/24"
+                style={{ marginRight: "10px" }}
+              />
+              <input type="text" name="" id="" placeholder="CVV:010" />
+            </div>
+            <input type="text" name="" id="" placeholder="Justin Robertson" />
+            <div className="payment-types">
+              <img src="/icons/western-card.svg" alt="" />
+              <img src="/icons/master-card.svg" alt="" />
+              <img src="/icons/paypal-card.svg" alt="" />
+              <img src="/icons/visa-card.svg" alt="" />
+            </div>
+          </Box>
         </Stack>
       </Container>
     </div>

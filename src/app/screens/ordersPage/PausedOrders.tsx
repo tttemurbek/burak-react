@@ -1,19 +1,19 @@
 import React from "react";
-import { Box, Stack } from "@mui/material";
+import { Box, Container, Stack } from "@mui/material";
 import Button from "@mui/material/Button";
 import TabPanel from "@mui/lab/TabPanel";
 
 export default function PausedOrders() {
   return (
     <TabPanel value={"1"}>
-      <Stack >
-        {[1].map((ele, index) => {
+      <Stack>
+        {[1, 2].map((ele, index) => {
           return (
             <Box key={index} className="order-main-box">
               <Box className="order-box-scroll">
-                {[1].map((ele2, index2) => {
+                {[1, 2, 3].map((ele2, index2) => {
                   return (
-                    <Box key={index2} className="order-name-price">
+                    <Box key={index2} className="orders-name-price">
                       <img
                         src={"/img/lavash.webp"}
                         className={"order-dish-img"}
@@ -46,10 +46,15 @@ export default function PausedOrders() {
                   variant="contained"
                   color="secondary"
                   className="cancel-button"
+                  sx={{ marginRight: "20px", marginLeft: "20px" }}
                 >
                   Cancel
                 </Button>
-                <Button variant="contained" className="pay-button">
+                <Button
+                  variant="contained"
+                  className="pay-button"
+                  sx={{ marginRight: "20px" }}
+                >
                   Payment
                 </Button>
               </Box>

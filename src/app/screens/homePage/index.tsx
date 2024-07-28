@@ -7,13 +7,28 @@ import ActiveUsers from "./ActiveUsers";
 import Events from "./Events";
 import "../../../css/home.css";
 
-export default function HomePage() {
-  // Selector: Store => Data
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
+import { createSelector } from "reselect";
+import { setPopularDishes } from "./slice";
+import { retrievePopularDishes } from "./selector";
+import { Product } from "../../../lib/types/product";
+import { log } from "console";
 
-  useEffect(() => {
-    //  backend serverimizdan datani request qilamiz => DATA FETCH
-    // Slice: Data => Store(Redux Store desekte boladi)
-  }, []);
+/* REDUX SLICE & SELECTOR*/
+const actionDispatch = (dispatch: Dispatch) => ({
+  setPopularDishes: (data: Product[]) => dispatch(setPopularDishes(data)),
+}); // setPopularDishes reduceri orqali setPopularDishes kommandasini hosil qilyabmiz
+const popularDishesRetriever = createSelector(
+  retrievePopularDishes,
+  (popularDishes) => ({ popularDishes })
+);
+
+export default function HomePage() {
+  const { setPopularDishes } = actionDispatch(useDispatch());
+  const { popularDishes } = useSelector(popularDishesRetriever);
+
+  useEffect(() => {}, []);
 
   return (
     <div className="homepage">

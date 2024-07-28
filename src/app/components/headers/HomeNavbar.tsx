@@ -17,9 +17,6 @@ export default function HomeNavbar() {
       console.log("componentWillUnmount");
     };
   }, [value]);
-  //useEffect faqat bir marta ishga tushadi
-  // array valuega ma'lum bir value kiritsak, qayta ishga tushadi
-  // value qiymati ozgarganda componentDidUpdate ishga tushadi
 
   // HANDLERS
   const buttonHandler = () => {

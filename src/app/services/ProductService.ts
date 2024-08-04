@@ -2,6 +2,7 @@ import { serverApi } from "../../lib/config";
 import axios from "axios";
 import { Product, ProductInquiry } from "../../lib/types/product";
 import { log } from "console";
+import { RssFeed } from "@mui/icons-material";
 
 class ProductService {
   private readonly path: string;
@@ -19,6 +20,20 @@ class ProductService {
 
       const result = await axios.get(url);
       console.log("getProducts:", result);
+
+      return result.data;
+    } catch (err) {
+      console.log("error, getProduct:", err);
+      throw err;
+    }
+  }
+
+  public async getProduct(productId: string): Promise<Product> {
+    try {
+      const url = `${this.path}/product/${productId}`;
+      const result = await axios.get(url, { withCredentials: true });
+
+      console.log("getProduct:", result);
 
       return result.data;
     } catch (err) {

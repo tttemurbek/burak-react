@@ -17,19 +17,48 @@ import Test from "./screens/test";
 import { CartItem } from "../lib/types/search";
 import useBasket from "../hooks/useBasket";
 import AuthenticationModal from "./components/auth";
+import { T } from "../lib/types/common";
+import { sweetErrorHandling, sweetTopSuccessAlert } from "../lib/sweetAlert";
+import { Message } from "@mui/icons-material";
+import { Messages } from "../lib/config";
+import MemberService from "./services/MemberService";
+import { useGlobals } from "../hooks/useGlobals";
 
 function App() {
   const location = useLocation();
   console.log("location", location); // location degen hook bar reactda, sodan paydalansaq biz turgan pathdi korsetip beredi eken
 
+  const { setAuthMember } = useGlobals();
   const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = useBasket();
   const [signupOpen, setSignupOpen] = useState<boolean>(false);
   const [loginOpen, setLoginOpen] = useState<boolean>(false);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   /** HANDLERS */
 
   const handleSignupClose = () => setSignupOpen(false);
   const handleLoginClose = () => setLoginOpen(false);
+
+  const handleLogoutClick = (e: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(e.currentTarget);
+  };
+
+  const handleCloseLOgout = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogoutRequst = async () => {
+    try {
+      const member = new MemberService();
+      await member.logout();
+
+      sweetTopSuccessAlert("success", 700);
+      setAuthMember(null);
+    } catch (err) {
+      console.log(err);
+      sweetErrorHandling(Messages.error1);
+    }
+  };
 
   return (
     <>
@@ -42,6 +71,10 @@ function App() {
           onDeleteAll={onDeleteAll}
           setSignupOpen={setSignupOpen}
           setLoginOpen={setLoginOpen}
+          anchorEl={anchorEl}
+          handleLogoutClick={handleLogoutClick}
+          handleCloseLOgout={handleCloseLOgout}
+          handleLogoutRequst={handleLogoutRequst}
         />
       ) : (
         <OtherNavbar
@@ -52,6 +85,10 @@ function App() {
           onDeleteAll={onDeleteAll}
           setSignupOpen={setSignupOpen}
           setLoginOpen={setLoginOpen}
+          anchorEl={anchorEl}
+          handleLogoutClick={handleLogoutClick}
+          handleCloseLOgout={handleCloseLOgout}
+          handleLogoutRequst={handleLogoutRequst}
         />
       )}
       <Switch>

@@ -30,20 +30,26 @@ import {
 } from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
+import { CartItem } from "../../../lib/types/search";
 
 /* REDUX SLICE & SELECTOR*/
 
 const actionDispatch = (dispatch: Dispatch) => ({
   setProducts: (data: Product[]) => dispatch(setProducts(data)),
-});
+}); // key/command - and this is dispatch
 
 const productsRetriever = createSelector(retrieveProducts, (products) => ({
   products,
 }));
 
-export default function Products() {
-  const { setProducts } = actionDispatch(useDispatch());
-  const { products } = useSelector(productsRetriever);
+interface ProductsProps {
+  onAdd: (item: CartItem) => void;
+}
+
+export default function Products(props: ProductsProps) {
+  const { onAdd } = props;
+  const { setProducts } = actionDispatch(useDispatch()); // bu yerda
+  const { products } = useSelector(productsRetriever); // 41qatordagi products bilan bir hil
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
     page: 1,
     limit: 8,
@@ -51,6 +57,9 @@ export default function Products() {
     productCollection: ProductCollection.DISH,
     search: "",
   });
+
+  // productsSearch - object
+  // setProductSearch - productSearch ni ozgartira oladigan method
   const [searchText, setSearchText] = useState<string>("");
 
   const history = useHistory();
@@ -59,7 +68,7 @@ export default function Products() {
     const product = new ProductService();
     product
       .getProducts(productSearch)
-      .then((data) => setProducts(data))
+      .then((data) => setProducts(data)) // setProducts is dispatch
       .catch((err) => console.log(err));
   }, [productSearch]);
 
@@ -274,7 +283,19 @@ export default function Products() {
                         sx={{ backgroundImage: `url(${imagePath})` }}
                       >
                         <div className="product-sale"> {sizeVolume} </div>
-                        <Button className="shop-btn">
+                        <Button
+                          className="shop-btn"
+                          onClick={(e) => {
+                            onAdd({
+                              _id: product._id,
+                              quantity: 1,
+                              name: product.productName,
+                              price: product.productPrice,
+                              image: product.productImages[0],
+                            });
+                            e.stopPropagation();
+                          }}
+                        >
                           <img
                             src={"icons/shopping-cart.svg"}
                             style={{ display: "flex" }}

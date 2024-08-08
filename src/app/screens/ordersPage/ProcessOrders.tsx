@@ -6,9 +6,14 @@ import TabPanel from "@mui/lab/TabPanel";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { retrieveProcessOrders } from "./selector";
-import { serverApi } from "../../../lib/config";
-import { Order, OrderItem } from "../../../lib/types/order";
+import { Messages, serverApi } from "../../../lib/config";
+import { Order, OrderItem, OrderUpdateInput } from "../../../lib/types/order";
 import { Product } from "../../../lib/types/product";
+import { useGlobals } from "../../../hooks/useGlobals";
+import { T } from "../../../lib/types/common";
+import { OrderStatus } from "../../../lib/enums/order.enum";
+import OrderService from "../../services/OrderService";
+import { sweetErrorHandling } from "../../../lib/sweetAlert";
 
 /* REDUX SLICE & SELECTOR*/
 // setPopularDishes reduceri orqali setPopularDishes kommandasini hosil qilyabmiz
@@ -17,8 +22,41 @@ const pausedProcessRetriever = createSelector(
   (processOrders) => ({ processOrders })
 );
 
-export default function ProcessOrders() {
+interface ProcessOrdersProps {
+  setValue: (input: string) => void;
+}
+
+export default function ProcessOrders(props: ProcessOrdersProps) {
+  const { setValue } = props;
+  const { authMember, setOrderBuilder } = useGlobals();
   const { processOrders } = useSelector(pausedProcessRetriever);
+
+  /**HANDLERS  */
+
+  const finishOrderHandler = async (e: T) => {
+    try {
+      if (!authMember) throw new Error(Messages.error2);
+      // payment process
+
+      const orderId = e.target.value;
+      const input: OrderUpdateInput = {
+        orderId: orderId,
+        orderStatus: OrderStatus.FINISH,
+      };
+
+      const confirmation = window.confirm("Have you received your order?");
+      if (confirmation) {
+        const order = new OrderService();
+        await order.updateOrder(input);
+        setValue("3");
+        setOrderBuilder(new Date());
+      }
+    } catch (err) {
+      console.log(err);
+      sweetErrorHandling(err);
+    }
+  };
+
   return (
     <TabPanel value={"2"}>
       <Stack>
@@ -61,9 +99,11 @@ export default function ProcessOrders() {
                   <p>${order.orderTotal}</p>
                 </Box>
                 <Button
+                  value={order._id}
                   variant="contained"
                   color="secondary"
                   className="verify-button"
+                  onClick={finishOrderHandler}
                   sx={{ marginRight: "10px", marginLeft: "10px" }}
                 >
                   VERIFY TO FULFIL
